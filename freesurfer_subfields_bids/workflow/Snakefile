@@ -16,7 +16,6 @@ sbi = snakebids.generate_inputs(
     use_bids_inputs=True,
 )
 
-hemi_lookup={'L': 'lh','R': 'rh'}
 
 
 #this adds constraints to the bids naming
@@ -26,7 +25,7 @@ wildcard_constraints:  **snakebids.get_wildcard_constraints(config['pybids_input
 rule all:
     input:
         out_dir=expand(
-                bids(root='freesurfer',include_subject_dir=False,**sbi.subj_wildcards),
+                bids(root='done',include_subject_dir=False,**sbi.subj_wildcards),
                 subject=sbi.subjects,
                 session=sbi.sessions)
 
@@ -46,10 +45,12 @@ def get_T2w(wildcards):
     #return the first T2w scan for the subject
     return expand(sbi.input_path['T2w'],zip,**scans_zip_list)[0]
 
-    
+   
+
 rule freesurfer_subj:
     input:
-        t1w = get_T1w
+        t1w = get_T1w,
+        fs='resources/freesurfer'
     params:
         in_args = lambda wildcards, input: ' '.join( f'-i {img}' for img in input.t1w ),
         subjects_dir = 'freesurfer'
@@ -71,13 +72,12 @@ rule subfields_subj:
     input:
         fs_dir=bids(root='freesurfer',include_subject_dir=False,**sbi.subj_wildcards),
         t2w=get_T2w,
-        mcr_tar=config['mcr_tar']
-    params
-        container=config['singularity']['freesurfer'],
+    params:
+        subjects_dir='freesurfer',
+        subject_id='sub-{subject}',
     output:
         touch(bids(root='done',include_subject_dir=False,**sbi.subj_wildcards))
     shell:
-        'tar -C {resources.tmpdir} -xvf {input.mcr_tar} && '
-        '{singularity exec -B {resources.tmpdir}/MCRv84:/usr/local/freesurfer/MCRv84 '
-        '{params.container} segmentHA_T2.sh {wildcards.subject} {input.t2w} T2 0'
+        'export SUBJECTS_DIR={params.subjects_dir} && '
+        'segmentHA_T2.sh {params.subject_id} {input.t2w} T2 0'
 

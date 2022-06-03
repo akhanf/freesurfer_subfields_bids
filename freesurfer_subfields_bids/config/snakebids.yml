@@ -1,4 +1,6 @@
-mcr_tar: '~/graham/ctb/akhanf/opt/MCRv84.tar'
+singularity:
+  freesurfer: '/srv/containers/freesurfer_7.2.0.sif'
+
 
 #this configures the pybids grabber - create an entry for each type of input you want to grab
 # indexed by name of input
