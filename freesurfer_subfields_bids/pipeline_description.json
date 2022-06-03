@@ -1,0 +1,23 @@
+{
+    "Name": "freesurfer_subfields_bids - SnakeBIDS app for freesurfer hippocampal subfield segmentation",
+    "BIDSVersion": "1.4.0",
+    "DatasetType": "derivative",
+    "PipelineDescription":
+        {
+            "Name": "freesurfer_subfields_bids",
+            "Version": "0.1.0",
+            "CodeURL": "http://github.com/akhanf/freesurfer_subfields_bids",
+            "Author": "Ali Khan",
+            "AuthorEmail": "ali.khan@uwo.ca"
+        },
+    "GeneratedBy": [
+        {
+            "Name": "freesurfer_subfields_bids",
+            "Version": "0.1.0",
+            "CodeURL": "http://github.com/akhanf/freesurfer_subfields_bids",
+            "Author": "Ali Khan",
+            "AuthorEmail": "ali.khan@uwo.ca"
+ 
+        }
+    ]
+}
