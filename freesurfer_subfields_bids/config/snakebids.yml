@@ -1,5 +1,5 @@
 singularity:
-  freesurfer: '/srv/containers/freesurfer_7.2.0.sif'
+  freesurfer: '/project/6050199/akhanf/singularity/bids-apps/freesurfer_7.2.0_withsubfields.sif'
 
 
 #this configures the pybids grabber - create an entry for each type of input you want to grab

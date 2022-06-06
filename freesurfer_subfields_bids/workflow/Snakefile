@@ -50,7 +50,6 @@ def get_T2w(wildcards):
 rule freesurfer_subj:
     input:
         t1w = get_T1w,
-        fs='resources/freesurfer'
     params:
         in_args = lambda wildcards, input: ' '.join( f'-i {img}' for img in input.t1w ),
         subjects_dir = 'freesurfer'
@@ -77,7 +76,8 @@ rule subfields_subj:
         subject_id='sub-{subject}',
     output:
         touch(bids(root='done',include_subject_dir=False,**sbi.subj_wildcards))
+    container: config['singularity']['freesurfer']
     shell:
-        'export SUBJECTS_DIR={params.subjects_dir} && '
+        'export SUBJECTS_DIR=`realpath {params.subjects_dir}` && '
         'segmentHA_T2.sh {params.subject_id} {input.t2w} T2 0'
 
