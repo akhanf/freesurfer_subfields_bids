@@ -31,7 +31,6 @@ pybids_inputs:
 
 
 
-
 # snakebids app:
 
 bids_dir: '/path/to/bids_dir'
@@ -100,5 +99,10 @@ parse_args:
     default: False
     nargs: '+'
 
+  --t1_only:
+    help: 'Use T1 only for subfield segmentation (default: %(default)s) '
+    default: False
+    action: 'store_true'
 
 
+t1_only: False
